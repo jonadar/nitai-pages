@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* html ,body{
+            cursor: none;
+        } */
+    </style>
+</head>
+<body style="background-color:#ffffff;">
+    <div id="button-container" style="opacity: 0; transition: all 0.4s;">
+        <input type="color" id="color-picker" name="page" value="#ffffff">
+        <button onclick="openFullscreen()">fullscreen</button>
+    </div>
+</body>
+
+<script>
+    const colorPicker = document.getElementById("color-picker");
+    const buttonContainer = document.getElementById("button-container");
+    const html = document.documentElement;
+
+    colorPicker.addEventListener("input", event => {
+        console.log(colorPicker.value)
+        document.body.style = `background-color: ${colorPicker.value};`;
+    }) 
+
+
+    let timeoutId = null;
+    const timeToWait = 4; //seconds
+
+    document.addEventListener("mousemove", () => {
+        buttonContainer.style.opacity = 1;
+        html.style.cursor = "default";
+
+        //start timer to disapper again
+        if(timeoutId){
+            clearTimeout(timeoutId);
+        }
+        timeoutId = setTimeout(() => {
+            buttonContainer.style.opacity = 0;
+            html.style.cursor = "none";
+        }, 1000 * timeToWait)
+    });
+
+
+
+    // function from w3schools
+    var docElement = document.documentElement;
+    function openFullscreen() {
+        if (docElement.requestFullscreen) {
+            docElement.requestFullscreen();
+        } else if (docElement.webkitRequestFullscreen) { /* Safari */
+            docElement.webkitRequestFullscreen();
+        } else if (docElement.msRequestFullscreen) { /* IE11 */
+            docElement.msRequestFullscreen();
+        }
+    }
+</script>
+</html>
